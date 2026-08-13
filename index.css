@@ -1,0 +1,1359 @@
+/* ============================================================
+   CV-PRO — INDEX.CSS
+   Version 2.0
+   Design professionnel / responsive / mobile-first
+   ============================================================ */
+
+
+/* ============================================================
+   1. RESET & VARIABLES
+   ============================================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #1976d2;
+  --primary-dark: #0d47a1;
+  --primary-light: #42a5f5;
+
+  --success: #2e9d50;
+  --success-dark: #21753a;
+
+  --warning: #ff9800;
+  --danger: #e53935;
+
+  --bg: #f1f4f8;
+  --card-bg: #ffffff;
+  --surface: #f8fafc;
+
+  --text: #172033;
+  --text-light: #697386;
+  --text-muted: #98a2b3;
+
+  --border: #e1e6ee;
+  --border-dark: #cbd3df;
+
+  --shadow-sm:
+    0 2px 8px rgba(16, 24, 40, 0.06);
+
+  --shadow:
+    0 8px 30px rgba(16, 24, 40, 0.08);
+
+  --shadow-lg:
+    0 18px 60px rgba(16, 24, 40, 0.15);
+
+  --radius-sm: 7px;
+  --radius: 12px;
+  --radius-lg: 18px;
+
+  --transition:
+    0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --font:
+    Inter,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+
+/* ============================================================
+   2. GLOBAL
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(25, 118, 210, 0.05),
+      transparent 35%
+    ),
+    var(--bg);
+
+  color: var(--text);
+
+  font-family: var(--font);
+  line-height: 1.6;
+
+  transition:
+    background var(--transition),
+    color var(--transition);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  max-width: 100%;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+
+/* ============================================================
+   3. DARK MODE
+   ============================================================ */
+
+body.dark {
+  --bg: #0c111b;
+  --card-bg: #151c28;
+  --surface: #1b2432;
+
+  --text: #edf2f7;
+  --text-light: #aeb8c7;
+  --text-muted: #778397;
+
+  --border: #293444;
+  --border-dark: #39475a;
+
+  --shadow-sm:
+    0 2px 8px rgba(0, 0, 0, 0.25);
+
+  --shadow:
+    0 8px 30px rgba(0, 0, 0, 0.3);
+
+  --shadow-lg:
+    0 18px 60px rgba(0, 0, 0, 0.45);
+}
+
+
+/* ============================================================
+   4. SCROLLBAR
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-dark);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+
+/* ============================================================
+   5. HEADER
+   ============================================================ */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  padding: 12px 24px;
+
+  background:
+    color-mix(in srgb, var(--card-bg) 94%, transparent);
+
+  border-bottom: 1px solid var(--border);
+
+  box-shadow: var(--shadow-sm);
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+.header-content {
+  width: 100%;
+  max-width: 1450px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  min-width: 0;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      #00acc1
+    );
+
+  border-radius: 11px;
+
+  font-size: 22px;
+
+  box-shadow:
+    0 6px 18px rgba(25, 118, 210, 0.25);
+}
+
+.logo h1 {
+  font-size: 21px;
+  line-height: 1.15;
+  font-weight: 800;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      #00a5b5
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+
+.logo small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.5px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.badge {
+  padding: 5px 12px;
+
+  border-radius: 999px;
+
+  background: #e8f5e9;
+  color: #237a39;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+body.dark .badge {
+  background: rgba(76, 175, 80, 0.15);
+  color: #75d68b;
+}
+
+.generation-counter {
+  display: flex;
+  align-items: center;
+
+  padding: 6px 10px;
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  background: var(--surface);
+
+  color: var(--text-light);
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   6. HEADER BUTTONS
+   ============================================================ */
+
+.theme-btn,
+.reset-btn {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  background: var(--surface);
+  color: var(--text);
+
+  cursor: pointer;
+
+  transition: all var(--transition);
+}
+
+.theme-btn:hover,
+.reset-btn:hover {
+  border-color: var(--primary);
+
+  background: var(--primary);
+  color: #fff;
+
+  transform: translateY(-2px);
+}
+
+.reset-btn:hover {
+  transform: rotate(-20deg);
+}
+
+
+/* ============================================================
+   7. ADVERTISEMENT BANNER
+   ============================================================ */
+
+.ad-banner {
+  position: sticky;
+  top: 67px;
+  z-index: 900;
+
+  padding: 8px 20px;
+
+  background:
+    linear-gradient(
+      110deg,
+      #f57c00,
+      #ff9800,
+      #fb8c00
+    );
+
+  color: #fff;
+
+  box-shadow:
+    0 4px 18px rgba(245, 124, 0, 0.25);
+
+  transition: all var(--transition);
+}
+
+.ad-banner.hidden {
+  height: 0;
+  padding: 0;
+
+  opacity: 0;
+  overflow: hidden;
+
+  transform: translateY(-100%);
+}
+
+.ad-content {
+  max-width: 1450px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.ad-label {
+  padding: 3px 10px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.18);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#adText {
+  flex: 1;
+
+  margin: 0;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ad-btn {
+  border: none;
+
+  padding: 6px 16px;
+
+  border-radius: 999px;
+
+  background: #fff;
+  color: #e66f00;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition: all var(--transition);
+}
+
+.ad-btn:hover {
+  transform: scale(1.05);
+
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.ad-close {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+
+  cursor: pointer;
+
+  transition: all var(--transition);
+}
+
+.ad-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+
+/* ============================================================
+   8. MAIN LAYOUT
+   ============================================================ */
+
+.main {
+  width: 100%;
+  max-width: 1450px;
+
+  margin: 22px auto;
+
+  padding: 0 20px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.95fr)
+    minmax(0, 1.05fr);
+
+  gap: 24px;
+
+  align-items: start;
+}
+
+.panel {
+  min-width: 0;
+
+  padding: 24px;
+
+  background: var(--card-bg);
+
+  border:
+    1px solid var(--border);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow);
+
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+
+/* ============================================================
+   9. PANEL HEADERS
+   ============================================================ */
+
+.panel-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 22px;
+
+  padding-bottom: 15px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-title h2,
+.preview-header h2 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.panel-title p,
+.preview-header p {
+  margin-top: 3px;
+
+  color: var(--text-light);
+
+  font-size: 12px;
+}
+
+.status-dot {
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  background: #eaf7ee;
+  color: #2e8b48;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+body.dark .status-dot {
+  background: rgba(46, 157, 80, 0.14);
+  color: #76d692;
+}
+
+
+/* ============================================================
+   10. EDITOR SECTIONS
+   ============================================================ */
+
+.editor-section {
+  margin-bottom: 22px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.editor-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.editor-section h3 {
+  margin-bottom: 14px;
+
+  color: var(--primary);
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.section-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.section-description {
+  margin-top: -8px;
+  margin-bottom: 12px;
+
+  color: var(--text-muted);
+
+  font-size: 11px;
+}
+
+
+/* ============================================================
+   11. FORM ELEMENTS
+   ============================================================ */
+
+.form-group {
+  margin-bottom: 13px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--text-light);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.35px;
+
+  text-transform: uppercase;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+
+  padding: 10px 12px;
+
+  border:
+    1.5px solid var(--border);
+
+  border-radius: var(--radius-sm);
+
+  background: var(--surface);
+  color: var(--text);
+
+  font-size: 13px;
+
+  outline: none;
+
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background var(--transition);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  border-color: var(--primary);
+
+  background: var(--card-bg);
+
+  box-shadow:
+    0 0 0 3px rgba(25, 118, 210, 0.1);
+}
+
+.form-textarea {
+  min-height: 90px;
+
+  resize: vertical;
+
+  line-height: 1.55;
+}
+
+.form-row {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 10px;
+}
+
+.field-help {
+  display: block;
+
+  margin-top: 5px;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+}
+
+
+/* ============================================================
+   12. COLOR PICKER
+   ============================================================ */
+
+.color-picker {
+  width: 100%;
+  height: 42px;
+
+  padding: 3px;
+
+  border:
+    1.5px solid var(--border);
+
+  border-radius: var(--radius-sm);
+
+  background: var(--surface);
+
+  cursor: pointer;
+}
+
+.color-picker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-picker::-webkit-color-swatch {
+  border: none;
+
+  border-radius: 5px;
+}
+
+
+/* ============================================================
+   13. BUTTON SYSTEM
+   ============================================================ */
+
+.btn-group {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 9px;
+
+  margin-top: 5px;
+}
+
+.btn {
+  min-height: 43px;
+
+  flex: 1;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 10px 15px;
+
+  border: none;
+
+  border-radius: var(--radius-sm);
+
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition: all var(--transition);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:focus-visible,
+.icon-btn:focus-visible,
+.theme-btn:focus-visible,
+.reset-btn:focus-visible {
+  outline: 3px solid rgba(25, 118, 210, 0.25);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+
+  box-shadow:
+    0 4px 12px rgba(25, 118, 210, 0.2);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+
+  box-shadow:
+    0 7px 20px rgba(25, 118, 210, 0.28);
+}
+
+.btn-secondary {
+  background: #5f6b7a;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background: #485363;
+}
+
+.btn-success {
+  background: var(--success);
+  color: #fff;
+
+  box-shadow:
+    0 4px 12px rgba(46, 157, 80, 0.2);
+}
+
+.btn-success:hover {
+  background: var(--success-dark);
+
+  box-shadow:
+    0 7px 20px rgba(46, 157, 80, 0.25);
+}
+
+.btn-outline {
+  background: transparent;
+
+  color: var(--primary);
+
+  border:
+    1px solid var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+
+  transform: none !important;
+
+  box-shadow: none !important;
+}
+
+
+/* ============================================================
+   14. PREMIUM MESSAGE
+   ============================================================ */
+
+.premium-msg {
+  margin-top: 10px;
+
+  padding: 10px 12px;
+
+  border-radius: var(--radius-sm);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 193, 7, 0.12),
+      rgba(255, 152, 0, 0.08)
+    );
+
+  border:
+    1px solid rgba(255, 152, 0, 0.25);
+
+  color: #996300;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  text-align: center;
+}
+
+body.dark .premium-msg {
+  color: #ffc85c;
+}
+
+
+/* ============================================================
+   15. STATS
+   ============================================================ */
+
+.stats {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 13px;
+
+  margin-top: 15px;
+
+  padding-top: 13px;
+
+  border-top: 1px solid var(--border);
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+}
+
+#saveStatus {
+  margin-left: auto;
+}
+
+
+/* ============================================================
+   16. SECTION DRAG & DROP
+   ============================================================ */
+
+.section-order {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.sortable-item {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  min-height: 42px;
+
+  padding: 9px 12px;
+
+  background: var(--surface);
+
+  border:
+    1px solid var(--border);
+
+  border-radius: var(--radius-sm);
+
+  color: var(--text);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: grab;
+
+  user-select: none;
+
+  transition:
+    transform var(--transition),
+    border-color var(--transition),
+    background var(--transition),
+    box-shadow var(--transition);
+}
+
+.sortable-item:hover {
+  border-color: var(--primary);
+
+  background:
+    rgba(25, 118, 210, 0.04);
+
+  transform: translateX(3px);
+}
+
+.sortable-item:active {
+  cursor: grabbing;
+}
+
+.sortable-item.dragging {
+  opacity: 0.45;
+
+  transform: scale(0.98);
+
+  box-shadow: var(--shadow);
+}
+
+.drag-handle {
+  color: var(--text-muted);
+
+  font-size: 16px;
+
+  cursor: grab;
+}
+
+
+/* ============================================================
+   17. PREVIEW HEADER
+   ============================================================ */
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 15px;
+
+  padding-bottom: 13px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.preview-actions {
+  display: flex;
+
+  gap: 7px;
+}
+
+.icon-btn {
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 8px;
+
+  background: var(--surface);
+  color: var(--text);
+
+  cursor: pointer;
+
+  transition: all var(--transition);
+}
+
+.icon-btn:hover {
+  background: var(--primary);
+
+  border-color: var(--primary);
+
+  color: #fff;
+
+  transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   18. PREVIEW VIEWPORT
+   ============================================================ */
+
+.preview-viewport {
+  width: 100%;
+
+  min-height: 500px;
+
+  padding: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  background:
+    repeating-linear-gradient(
+      45deg,
+      var(--surface),
+      var(--surface) 10px,
+      rgba(127, 127, 127, 0.025) 10px,
+      rgba(127, 127, 127, 0.025) 20px
+    );
+
+  border:
+    1px solid var(--border);
+
+  border-radius: var(--radius);
+
+  overflow: auto;
+}
+
+
+/* ============================================================
+   19. CV DOCUMENT
+   ============================================================ */
+
+.cv-preview {
+  width: 100%;
+  max-width: 794px;
+
+  min-height: 1123px;
+
+  padding: 42px 46px;
+
+  background: #fff;
+
+  color: #1a1a2e;
+
+  border-radius: 4px;
+
+  box-shadow:
+    0 10px 35px rgba(0, 0, 0, 0.14);
+
+  overflow: hidden;
+
+  transform-origin: top center;
+
+  transition:
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.cv-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 20px;
+
+  padding-bottom: 20px;
+
+  border-bottom:
+    3px solid var(--primary);
+}
+
+.cv-photo-container {
+  flex-shrink: 0;
+
+  width: 90px;
+  height: 90px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cv-photo {
+  width: 90px;
+  height: 90px;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  border:
+    4px solid var(--primary);
+}
+
+.cv-avatar {
+  width: 76px;
+  height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eef5ff,
+      #dcecff
+    );
+
+  font-size: 36px;
+}
+
+.cv-identity {
+  min-width: 0;
+}
+
+#previewNom {
+  margin-bottom: 2px;
+
+  color: var(--primary);
+
+  font-size: 29px;
+  line-height: 1.2;
+
+  font-weight: 800;
+
+  word-break: break-word;
+}
+
+#previewTitre {
+  margin-bottom: 6px;
+
+  color: #5e6877;
+
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.cv-contact {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 6px 13px;
+
+  color: #7b8490;
+
+  font-size: 10px;
+}
+
+.cv-contact span {
+  white-space: nowrap;
+}
+
+
+/* ============================================================
+   20. CV BODY
+   ============================================================ */
+
+.cv-body {
+  padding: 20px 0 10px;
+}
+
+.cv-section {
+  margin-bottom: 17px;
+}
+
+.cv-section:last-child {
+  margin-bottom: 0;
+}
+
+.cv-section h5 {
+  margin-bottom: 7px;
+
+  padding-bottom: 5px;
+
+  color: var(--primary);
+
+  border-bottom:
+    1px solid #e8edf2;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.4px;
+}
+
+.cv-section p {
+  color: #343b46;
+
+  font-size: 11px;
+
+  line-height: 1.7;
+
+  white-space: pre-line;
+
+  word-break: break-word;
+}
+
+.skills-container {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 6px;
+}
+
+.skill-tag {
+  padding: 4px 11px;
+
+  border-radius: 999px;
+
+  background: var(--primary);
+
+  color: #fff;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.cv-footer {
+  margin-top: 22px;
+
+  padding-top: 10px;
+
+  border-top:
+    1px solid #edf0f3;
+
+  color: #a3a9b1;
+
+  font-size: 8px;
+
+  text-align: center;
+}
+
+
+/* ============================================================
+   21. TEMPLATE — CLASSIQUE
+   ============================================================ */
+
+.cv-preview.template-classique .cv-header {
+  border-bottom:
+    3px double var(--primary);
+
+  justify-content: flex-start;
+}
+
+.cv-preview.template-classique #previewNom {
+  font-family: Georgia, "Times New Roman", serif;
+
+  color: #222;
+
+  font-size: 27px;
+}
+
+.cv-preview.template-classique #previewTitre {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.cv-preview.template-classique .cv-section h5 {
+  font-family: Georgia, "Times New Roman", serif;
+
+  border-bottom:
+    1px solid #222;
+
+  color: #222;
+}
+
+.cv-preview.template-classique .skill-tag {
+  border-radius: 2px;
+
+  background: #fff;
+
+  border:
+    1px solid var(--primary);
+
+  color: var(--primary);
+}
+
+
+/* ============================================================
+   22. TEMPLATE — COMPACT
+   ============================================================ */
+
+.cv-preview.template-compact {
+  padding: 30px 36px;
+}
+
+.cv-preview.template-compact .cv-header {
+  padding-bottom: 13px;
+}
+
+.cv-preview.template-compact #previewNom {
+  font-size: 23px;
+}
+
+.cv-prev

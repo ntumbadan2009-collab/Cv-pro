@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="CV-Pro — créez, personnalisez et exportez votre CV professionnel gratuitement."
+  >
+
+  <meta name="theme-color" content="#1976D2">
+
+  <title>CV-Pro — Générateur de CV professionnel</title>
+
+  <link
+    rel="icon"
+    href="data:image/svg+xml,
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+      <text y='.9em' font-size='90'>📄</text>
+    </svg>"
+  >
+
+  <!-- =========================================================
+       CSS
+       ========================================================= -->
+
+  <link rel="stylesheet" href="index.css">
+
+  <!-- =========================================================
+       LIBRAIRIES EXTERNES
+       ========================================================= -->
+
+  <!-- html2canvas : export image -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+    defer
+  ></script>
+
+  <!-- jsPDF : export PDF -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+    defer
+  ></script>
+
+</head>
+
+<body>
+
+  <!-- =========================================================
+       HEADER
+       ========================================================= -->
+
+  <header class="header">
+
+    <div class="header-content">
+
+      <div class="logo">
+
+        <span class="logo-icon">📄</span>
+
+        <div>
+          <h1>CV-Pro</h1>
+          <small>Professional CV Builder</small>
+        </div>
+
+      </div>
+
+      <div class="header-right">
+
+        <span
+          id="versionBadge"
+          class="badge"
+        >
+          Gratuit
+        </span>
+
+        <span
+          id="generationCounter"
+          class="generation-counter"
+          title="Nombre de CV générés sur cet appareil"
+        >
+          📊 0
+        </span>
+
+        <button
+          id="themeToggle"
+          class="theme-btn"
+          type="button"
+          aria-label="Changer le thème"
+          title="Changer le thème"
+        >
+          🌙
+        </button>
+
+        <button
+          id="resetBtn"
+          class="reset-btn"
+          type="button"
+          aria-label="Réinitialiser le CV"
+          title="Réinitialiser"
+        >
+          🔄
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================================================
+       BANNIÈRE PUBLICITAIRE
+       ========================================================= -->
+
+  <div
+    class="ad-banner"
+    id="adBanner"
+  >
+
+    <div class="ad-content">
+
+      <span class="ad-label">
+        📢 Sponsor
+      </span>
+
+      <p id="adText">
+        Créez votre CV professionnel gratuitement.
+      </p>
+
+      <button
+        id="adLink"
+        class="ad-btn"
+        type="button"
+      >
+        Voir
+      </button>
+
+      <button
+        id="adClose"
+        class="ad-close"
+        type="button"
+        aria-label="Fermer la publicité"
+      >
+        ✕
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       APPLICATION PRINCIPALE
+       ========================================================= -->
+
+  <main class="main">
+
+
+    <!-- =======================================================
+         PANNEAU ÉDITEUR
+         ======================================================= -->
+
+    <section
+      class="panel editor-panel"
+      aria-label="Éditeur de CV"
+    >
+
+      <div class="panel-title">
+
+        <div>
+          <h2>✏️ Éditeur</h2>
+          <p>Personnalisez votre CV en temps réel.</p>
+        </div>
+
+        <span class="status-dot">
+          ● En direct
+        </span>
+
+      </div>
+
+
+      <!-- =====================================================
+           INFORMATIONS PERSONNELLES
+           ===================================================== -->
+
+      <div class="editor-section">
+
+        <h3>👤 Informations personnelles</h3>
+
+        <div class="form-group">
+
+          <label for="nom">
+            Nom complet
+          </label>
+
+          <input
+            type="text"
+            id="nom"
+            class="form-input"
+            value="Jean Dupont"
+            placeholder="Votre nom complet"
+            maxlength="80"
+            autocomplete="name"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="titre">
+            Titre professionnel
+          </label>
+
+          <input
+            type="text"
+            id="titre"
+            class="form-input"
+            value="Développeur Full-Stack"
+            placeholder="Ex : Développeur Web"
+            maxlength="100"
+          >
+
+        </div>
+
+
+        <div class="form-row">
+
+          <div class="form-group">
+
+            <label for="email">
+              📧 Email
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              class="form-input"
+              value="jean@email.com"
+              placeholder="email@exemple.com"
+              autocomplete="email"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="tel">
+              📱 Téléphone
+            </label>
+
+            <input
+              type="tel"
+              id="tel"
+              class="form-input"
+              value="06 12 34 56 78"
+              placeholder="+243..."
+              autocomplete="tel"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="adresse">
+            📍 Adresse
+          </label>
+
+          <input
+            type="text"
+            id="adresse"
+            class="form-input"
+            value="Paris, France"
+            placeholder="Ville, Pays"
+            maxlength="120"
+            autocomplete="street-address"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="siteweb">
+            🌐 Site web / Portfolio
+          </label>
+
+          <input
+            type="text"
+            id="siteweb"
+            class="form-input"
+            value="jeandupont.com"
+            placeholder="monsite.com"
+            maxlength="150"
+          >
+
+        </div>
+
+
+        <!-- PHOTO -->
+
+        <div class="form-group">
+
+          <label for="photoInput">
+            📷 Photo de profil
+          </label>
+
+          <input
+            type="file"
+            id="photoInput"
+            class="form-input"
+            accept="image/png,image/jpeg,image/webp"
+          >
+
+          <small class="field-help">
+            JPG, PNG ou WebP — facultatif.
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           COMPÉTENCES
+           ===================================================== -->
+
+      <div class="editor-section">
+
+        <h3>🌟 Compétences</h3>
+
+        <div class="form-group">
+
+          <label for="competences">
+            Compétences séparées par des virgules
+          </label>
+
+          <input
+            type="text"
+            id="competences"
+            class="form-input"
+            value="JavaScript, React, Node.js, Python, Docker"
+            placeholder="HTML, CSS, JavaScript..."
+            maxlength="500"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           EXPÉRIENCE
+           ===================================================== -->
+
+      <div class="editor-section">
+
+        <h3>💼 Expérience professionnelle</h3>
+
+        <div class="form-group">
+
+          <label for="experience">
+            Votre expérience
+          </label>
+
+          <textarea
+            id="experience"
+            rows="6"
+            class="form-textarea"
+            placeholder="Décrivez votre expérience..."
+            maxlength="3000"
+          >Lead Frontend - Google (5 ans)
+Développeur Full-Stack - Startup XYZ (3 ans)
+Stagiaire - Agence Web (1 an)</textarea>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           FORMATION
+           ===================================================== -->
+
+      <div class="editor-section">
+
+        <h3>🎓 Formation</h3>
+
+        <div class="form-group">
+
+          <label for="formation">
+            Votre parcours académique
+          </label>
+
+          <textarea
+            id="formation"
+            rows="5"
+            class="form-textarea"
+            placeholder="Votre formation..."
+            maxlength="2500"
+          >Master Informatique - Sorbonne Université
+Licence Mathématiques - Université Paris-Sud</textarea>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           PERSONNALISATION
+           ===================================================== -->
+
+      <div class="editor-section">
+
+        <h3>🎨 Personnalisation</h3>
+
+
+        <div class="form-row">
+
+          <div class="form-group">
+
+            <label for="couleur">
+              Couleur principale
+            </label>
+
+            <input
+              type="color"
+              id="couleur"
+              value="#1976D2"
+              class="color-picker"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="templateSelect">
+              Template
+            </label>
+
+            <select
+              id="templateSelect"
+              class="form-input"
+            >
+
+              <option value="moderne">
+                Moderne
+              </option>
+
+              <option value="classique">
+                Classique
+              </option>
+
+              <option value="compact">
+                Compact
+              </option>
+
+              <option value="minimaliste">
+                Minimaliste
+              </option>
+
+              <option value="colore">
+                Coloré
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           ORGANISATION DES SECTIONS
+           ===================================================== -->
+
+      <div class="editor-section">
+
+        <div class="section-heading-row">
+
+          <div>
+
+            <h3>↕️ Organisation</h3>
+
+            <p class="section-description">
+              Glissez les sections pour modifier leur ordre.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="sectionOrder"
+          class="section-order"
+        >
+
+          <div
+            class="sortable-item"
+            draggable="true"
+            data-section="competences"
+          >
+            <span class="drag-handle">☰</span>
+            <span>🌟 Compétences</span>
+          </div>
+
+          <div
+            class="sortable-item"
+            draggable="true"
+            data-section="experience"
+          >
+            <span class="drag-handle">☰</span>
+            <span>💼 Expérience</span>
+          </div>
+
+          <div
+            class="sortable-item"
+            draggable="true"
+            data-section="formation"
+          >
+            <span class="drag-handle">☰</span>
+            <span>🎓 Formation</span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           ACTIONS
+           ===================================================== -->
+
+      <div class="editor-section">
+
+        <h3>📤 Exporter</h3>
+
+        <div class="btn-group">
+
+          <button
+            id="exportBtn"
+            class="btn btn-primary"
+            type="button"
+          >
+            📥 PNG gratuit
+          </button>
+
+          <button
+            id="exportPdfBtn"
+            class="btn btn-secondary"
+            type="button"
+          >
+            📄 Exporter PDF
+          </button>
+
+          <button
+            id="exportPremiumBtn"
+            class="btn btn-success"
+            type="button"
+          >
+            ⭐ Export HD
+          </button>
+
+        </div>
+
+
+        <div
+          id="premiumMsg"
+          class="premium-msg"
+        >
+          ⭐ L'export HD peut être débloqué après visionnage de la publicité.
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           STATISTIQUES
+           ===================================================== -->
+
+      <div class="stats">
+
+        <span id="charCount">
+          0 caractères
+        </span>
+
+        <span id="wordCount">
+          0 mots
+        </span>
+
+        <span id="saveStatus">
+          💾 Sauvegarde automatique
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         PANNEAU APERÇU
+         ======================================================= -->
+
+    <section
+      class="panel preview-panel"
+      aria-label="Aperçu du CV"
+    >
+
+      <div class="preview-header">
+
+        <div>
+
+          <h2>👁️ Aperçu</h2>
+
+          <p>
+            Votre CV se met à jour instantanément.
+          </p>
+
+        </div>
+
+
+        <div class="preview-actions">
+
+          <button
+            id="mobilePreviewBtn"
+            class="icon-btn"
+            type="button"
+            title="Aperçu mobile"
+            aria-label="Aperçu mobile"
+          >
+            📱
+          </button>
+
+          <button
+            id="printBtn"
+            class="icon-btn"
+            type="button"
+            title="Imprimer"
+            aria-label="Imprimer"
+          >
+            🖨️
+          </button>
+
+          <button
+            id="fullscreenBtn"
+            class="icon-btn"
+            type="button"
+            title="Plein écran"
+            aria-label="Plein écran"
+          >
+            ⛶
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           CONTENEUR CV
+           ===================================================== -->
+
+      <div
+        id="previewViewport"
+        class="preview-viewport"
+      >
+
+        <article
+          id="cvPreview"
+          class="cv-preview template-moderne"
+        >
+
+
+          <!-- =================================================
+               HEADER CV
+               ================================================= -->
+
+          <header
+            class="cv-header"
+            id="cvHeader"
+          >
+
+            <div class="cv-photo-container">
+
+              <img
+                id="previewPhoto"
+                class="cv-photo"
+                src=""
+                alt="Photo de profil"
+                hidden
+              >
+
+              <div
+                id="defaultAvatar"
+                class="cv-avatar"
+              >
+                👤
+              </div>
+
+            </div>
+
+
+            <div class="cv-identity">
+
+              <h3 id="previewNom">
+                Jean Dupont
+              </h3>
+
+              <h4 id="previewTitre">
+                Développeur Full-Stack
+              </h4>
+
+              <div class="cv-contact">
+
+                <span id="previewEmail">
+                  📧 jean@email.com
+                </span>
+
+                <span id="previewTel">
+                  📱 06 12 34 56 78
+                </span>
+
+                <span id="previewAdresse">
+                  📍 Paris, France
+                </span>
+
+                <span id="previewSite">
+                  🌐 jeandupont.com
+                </span>
+
+              </div>
+
+            </div>
+
+          </header>
+
+
+          <!-- =================================================
+               CORPS DU CV
+               ================================================= -->
+
+          <div
+            id="cvBody"
+            class="cv-body"
+          >
+
+            <!-- COMPÉTENCES -->
+
+            <section
+              class="cv-section"
+              data-section="competences"
+              draggable="false"
+            >
+
+              <h5>
+                🌟 Compétences
+              </h5>
+
+              <div
+                id="previewCompetences"
+                class="skills-container"
+              >
+
+                <span class="skill-tag">
+                  JavaScript
+                </span>
+
+                <span class="skill-tag">
+                  React
+                </span>
+
+                <span class="skill-tag">
+                  Node.js
+                </span>
+
+              </div>
+
+            </section>
+
+
+            <!-- EXPÉRIENCE -->
+
+            <section
+              class="cv-section"
+              data-section="experience"
+              draggable="false"
+            >
+
+              <h5>
+                💼 Expérience
+              </h5>
+
+              <p id="previewExp">Lead Frontend - Google (5 ans)
+Développeur Full-Stack - Startup XYZ (3 ans)</p>
+
+            </section>
+
+
+            <!-- FORMATION -->
+
+            <section
+              class="cv-section"
+              data-section="formation"
+              draggable="false"
+            >
+
+              <h5>
+                🎓 Formation
+              </h5>
+
+              <p id="previewForm">Master Informatique - Sorbonne Université
+Licence Mathématiques - Université Paris-Sud</p>
+
+            </section>
+
+          </div>
+
+
+          <!-- =================================================
+               FOOTER CV
+               ================================================= -->
+
+          <footer
+            class="cv-footer"
+            id="cvFooter"
+          >
+
+            <span>
+              CV généré avec CV-Pro
+            </span>
+
+          </footer>
+
+        </article>
+
+      </div>
+
+
+      <!-- =====================================================
+           ACTIONS RAPIDES
+           ===================================================== -->
+
+      <div class="quick-actions">
+
+        <button
+          id="shareCvBtn"
+          class="btn btn-outline"
+          type="button"
+        >
+          🔗 Partager ce CV
+        </button>
+
+        <button
+          id="copyLinkBtn"
+          class="btn btn-outline"
+          type="button"
+        >
+          📋 Copier le lien
+        </button>
+
+      </div>
+
+
+      <!-- =====================================================
+           MESSAGE PARTAGE
+           ===================================================== -->
+
+      <div
+        id="shareStatus"
+        class="share-status"
+        aria-live="polite"
+      ></div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================================================
+       MODAL APERÇU MOBILE
+       ========================================================= -->
+
+  <div
+    id="mobilePreviewModal"
+    class="modal-overlay"
+    hidden
+  >
+
+    <div
+      class="mobile-preview-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="mobilePreviewTitle"
+    >
+
+      <button
+        id="closeMobilePreview"
+        class="modal-close"
+        type="button"
+        aria-label="Fermer"
+      >
+        ✕
+      </button>
+
+      <h3 id="mobilePreviewTitle">
+        📱 Aperçu mobile
+      </h3>
+
+      <div class="phone-frame">
+
+        <div class="phone-screen">
+
+          <div
+            id="mobilePreviewContainer"
+            class="mobile-preview-container"
+          ></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       MODAL PUBLICITÉ
+       ========================================================= -->
+
+  <div
+    id="videoAdOverlay"
+    class="video-ad-overlay"
+    hidden
+  >
+
+    <div
+      class="video-ad-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="videoAdTitle"
+    >
+
+      <button
+        id="videoCloseBtn"
+        class="video-close"
+        type="button"
+        aria-label="Fermer"
+      >
+        ✕
+      </button>
+
+      <h3 id="videoAdTitle">
+        📺 Débloquer l'export HD
+      </h3>
+
+      <p class="ad-des
