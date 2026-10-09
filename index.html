@@ -3920,13 +3920,18 @@ function bumpUsage() {
 }
 let lastCall = 0;
 
+const isWebOrigin = () => /^https?:$/.test(location.protocol);
+const OFFLINE_FILE_MSG = "L'IA fonctionne uniquement sur le site en ligne (adresse en https://…), pas sur un fichier ouvert depuis le téléphone ou l'ordinateur. Publiez le fichier sur GitHub Pages, puis ouvrez le site.";
+const detail = err => String((err && (err.message || err.code)) || err || "").replace(/\s+/g, " ").slice(0, 260);
+
 function friendlyError(err) {
   const msg = String((err && (err.message || err.code)) || err || "");
   if (msg === "NOT_CONFIGURED") return "L'assistant IA n'est pas encore configuré (clés Firebase manquantes dans index.html).";
   if (msg === "EMPTY") return "L'IA n'a rien renvoyé. Réessayez dans un instant.";
   if (msg === "BAD_JSON") return "La réponse de l'IA était illisible. Relancez l'analyse.";
   if (!navigator.onLine || /network|failed to fetch|load failed|import/i.test(msg)) return "Connexion impossible. Vérifiez votre accès Internet puis réessayez.";
-  if (/429|quota|RESOURCE_EXHAUSTED|rate/i.test(msg)) return "Le quota gratuit de l'IA est atteint pour le moment. Réessayez un peu plus tard.";
+  if (/\b429\b|quota|RESOURCE_EXHAUSTED|too many requests/i.test(msg)) return "Le quota gratuit de l'IA est atteint pour le moment. Réessayez un peu plus tard.";
+  if (/app.?check.*(invalid|token)|token is invalid/i.test(msg)) return "App Check n'a pas validé ce site. Vérifiez que l'adresse du site figure dans les domaines de la clé reCAPTCHA et que l'app est bien enregistrée dans App Check.";
   if (/403|app.?check|PERMISSION_DENIED|API.?key|not.?enabled|disabled/i.test(msg)) return "Accès à l'IA refusé. Vérifiez App Check, le domaine autorisé et l'activation de Firebase AI Logic.";
   if (/timeout|timed out|abort|deadline/i.test(msg)) return "L'IA met trop de temps à répondre. Réessayez.";
   if (/block|safety|SAFETY|PROHIBITED/i.test(msg)) return "L'IA n'a pas pu traiter ce texte. Reformulez-le puis réessayez.";
@@ -4006,9 +4011,10 @@ function renderLoading() {
   sheet.appendChild(l);
 }
 
-function renderError(message, canRetry = true) {
+function renderError(message, canRetry = true, tech = "") {
   sheet.replaceChildren(header());
   sheet.appendChild(el("p", "ai-msg is-error", message));
+  if (tech) sheet.appendChild(el("p", "ai-note", "Détail technique : " + tech));
   const a = el("div", "ai-actions");
   if (canRetry && isConfigured()) a.appendChild(button("Réessayer", "btn-primary", run));
   a.appendChild(button("Fermer", "btn-outline", closeSheet));
@@ -4063,6 +4069,7 @@ async function run() {
   const id = ++reqId;
   const { job, original } = current;
 
+  if (!isWebOrigin()) { renderError(OFFLINE_FILE_MSG, false); return; }
   if (!isConfigured()) { renderError(friendlyError(new Error("NOT_CONFIGURED"))); return; }
   if (!localStorage.getItem(CONSENT_KEY)) { renderConsent(); return; }
 
@@ -4080,7 +4087,7 @@ async function run() {
   } catch (err) {
     if (id !== reqId) return;
     console.error("[CV-Pro IA]", err);
-    renderError(friendlyError(err));
+    renderError(friendlyError(err), true, detail(err));
   }
 }
 
@@ -4192,8 +4199,9 @@ function initAtsPanel() {
   host.append(title, intro, details, row, out);
 
   const setBusy = busy => { btn.disabled = busy; };
-  const showError = (msg, retry) => {
+  const showError = (msg, retry, tech) => {
     out.replaceChildren(el("p", "ai-msg is-error", msg));
+    if (tech) out.appendChild(el("p", "ai-note", "Détail technique : " + tech));
     if (retry) {
       const b = el("button", "btn btn-outline", "Réessayer");
       b.type = "button"; b.addEventListener("click", go);
@@ -4254,6 +4262,7 @@ function initAtsPanel() {
   }
 
   async function go() {
+    if (!isWebOrigin()) { showError(OFFLINE_FILE_MSG, false); return; }
     if (!isConfigured()) { showError(friendlyError(new Error("NOT_CONFIGURED")), false); return; }
     if (!localStorage.getItem(ATS_CONSENT_KEY)) { showConsent(); return; }
     const data = window.CVProAtsPayload && window.CVProAtsPayload();
@@ -4281,7 +4290,7 @@ function initAtsPanel() {
       btn.textContent = "↻ Relancer l'analyse";
     } catch (err) {
       console.error("[CV-Pro IA · ATS]", err);
-      showError(friendlyError(err), true);
+      showError(friendlyError(err), true, detail(err));
     } finally {
       setBusy(false);
     }
