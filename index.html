@@ -3746,7 +3746,8 @@ const AI_CONFIG = {
   },
   model: "gemini-3.5-flash",  // à ajuster selon la liste des modèles de la doc Firebase AI Logic
   sdkVersion: "12.3.0",       // version du SDK Firebase Web chargée depuis gstatic.com
-  timeoutMs: 25000,
+  thinkingLevel: "LOW",       // réflexion légère = réponses bien plus rapides (modèles Gemini 3.x : "MINIMAL", "LOW", "MEDIUM", "HIGH" ; mettre "" pour désactiver)
+  timeoutMs: 35000,
   dailyLimit: 15,             // garde-fou côté navigateur (protège le quota gratuit)
   cooldownMs: 4000,
   minChars: 15
@@ -3888,9 +3889,10 @@ function getAiInstance() {
 function getModel(kind = "improve") {
   if (models[kind]) return models[kind];
   models[kind] = getAiInstance().then(({ ai, getGenerativeModel }) => {
+    const thinking = AI_CONFIG.thinkingLevel ? { thinkingConfig: { thinkingLevel: AI_CONFIG.thinkingLevel } } : {};
     const cfg = kind === "ats"
-      ? { model: AI_CONFIG.model, systemInstruction: ATS_SYSTEM_INSTRUCTION, generationConfig: { temperature: 0.3, responseMimeType: "application/json" } }
-      : { model: AI_CONFIG.model, systemInstruction: SYSTEM_INSTRUCTION, generationConfig: { temperature: 0.4 } };
+      ? { model: AI_CONFIG.model, systemInstruction: ATS_SYSTEM_INSTRUCTION, generationConfig: { temperature: 0.3, responseMimeType: "application/json", ...thinking } }
+      : { model: AI_CONFIG.model, systemInstruction: SYSTEM_INSTRUCTION, generationConfig: { temperature: 0.4, ...thinking } };
     return getGenerativeModel(ai, cfg, { timeout: kind === "ats" ? AI_CONFIG.timeoutMs + 20000 : AI_CONFIG.timeoutMs });
   }).catch(err => { delete models[kind]; throw err; });
   return models[kind];
