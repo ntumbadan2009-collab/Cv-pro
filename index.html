@@ -18,7 +18,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Outfit:wght@400;500;600;700&family=Baloo+2:wght@500;600;700&family=Nunito:wght@400;600;700&family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 /* =====================================================================
@@ -522,8 +522,16 @@ p { margin: 0; }
    identité vraiment distincte — mais tous partagent la même échelle de
    lecture standard et le même système d'espacement intelligent. */
 .cv-photo { object-fit: cover; flex-shrink: 0; display: block; }
-.cv-photo.shape-ronde { border-radius: 50%; }
+.cv-photo.shape-auto, .cv-photo.shape-ronde { border-radius: 50%; }
 .cv-photo.shape-carree { border-radius: 4px; }
+/* Formes de photo : chaque choix s'impose à TOUS les modèles ("Auto" garde le
+   style propre du modèle). Uniquement border-radius / box-shadow / aspect-ratio :
+   l'export PDF/PNG reste identique à l'aperçu. */
+.cv-sheet .cv-photo.shape-ronde { border-radius: 50% !important; }
+.cv-sheet .cv-photo.shape-carree { border-radius: 3px !important; }
+.cv-sheet .cv-photo.shape-arrondie { border-radius: 22% !important; }
+.cv-sheet .cv-photo.shape-portrait { border-radius: 8px !important; height: auto !important; aspect-ratio: 4 / 5; }
+.cv-sheet .cv-photo.shape-cadre { border-radius: 50% !important; box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--accent) !important; }
 .entry-top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
 
 /* --- Écriture : le sélecteur "Police" (Moderne / Élégante / Classique /
@@ -535,6 +543,35 @@ p { margin: 0; }
 .cv-sheet[data-font="elegante"]  { --cv-font-display: 'Fraunces', Georgia, serif; --cv-font-body: Georgia, 'Fraunces', serif; --cv-font-accent: Georgia, serif; }
 .cv-sheet[data-font="classique"] { --cv-font-display: Georgia, 'Times New Roman', Times, serif; --cv-font-body: Georgia, 'Times New Roman', Times, serif; --cv-font-accent: Georgia, serif; }
 .cv-sheet[data-font="technique"] { --cv-font-display: var(--font-ui); --cv-font-body: var(--font-ui); --cv-font-accent: var(--font-mono); }
+.cv-sheet[data-font="yek"]    { --cv-font-display: 'Outfit', 'Inter', sans-serif; --cv-font-body: 'Outfit', 'Inter', sans-serif; --cv-font-accent: 'Outfit', 'Inter', sans-serif; }
+.cv-sheet[data-font="filous"] { --cv-font-display: 'Baloo 2', 'Nunito', sans-serif; --cv-font-body: 'Nunito', 'Inter', sans-serif; --cv-font-accent: 'Baloo 2', 'Nunito', sans-serif; }
+.cv-sheet[data-font="agmg"]   { --cv-font-display: 'Space Grotesk', 'Inter', sans-serif; --cv-font-body: 'IBM Plex Sans', 'Inter', sans-serif; --cv-font-accent: 'IBM Plex Mono', ui-monospace, monospace; }
+
+/* Un choix de typographie (autre que « Moderne ») s'applique réellement à TOUS
+   les modèles, y compris ceux qui fixent leurs propres polices. */
+.cv-sheet[data-font]:not([data-font="moderne"]) .cv-name { font-family: var(--cv-font-display) !important; }
+.cv-sheet[data-font]:not([data-font="moderne"]) .cv-section h3,
+.cv-sheet[data-font]:not([data-font="moderne"]) .entry-dates,
+.cv-sheet[data-font]:not([data-font="moderne"]) .lang-row .lang-level { font-family: var(--cv-font-accent) !important; }
+.cv-sheet[data-font]:not([data-font="moderne"]) .cv-role,
+.cv-sheet[data-font]:not([data-font="moderne"]) .cv-contact,
+.cv-sheet[data-font]:not([data-font="moderne"]) .cv-profile,
+.cv-sheet[data-font]:not([data-font="moderne"]) .entry-title,
+.cv-sheet[data-font]:not([data-font="moderne"]) .entry-sub,
+.cv-sheet[data-font]:not([data-font="moderne"]) .entry-desc,
+.cv-sheet[data-font]:not([data-font="moderne"]) .lang-row,
+.cv-sheet[data-font]:not([data-font="moderne"]) .skill-chip,
+.cv-sheet[data-font]:not([data-font="moderne"]) .cv-closing-meta,
+.cv-sheet[data-font]:not([data-font="moderne"]) .cv-closing-signature-label,
+.cv-sheet[data-font]:not([data-font="moderne"]) .empty-hint { font-family: var(--cv-font-body) !important; }
+
+/* Aperçu des polices dans les boutons de l'onglet Design */
+#fontOptions [data-font="elegante"] { font-family: 'Fraunces', Georgia, serif; }
+#fontOptions [data-font="classique"] { font-family: Georgia, 'Times New Roman', serif; }
+#fontOptions [data-font="technique"] { font-family: var(--font-mono); font-size: 13px; }
+#fontOptions [data-font="yek"] { font-family: 'Outfit', sans-serif; }
+#fontOptions [data-font="filous"] { font-family: 'Baloo 2', 'Nunito', sans-serif; }
+#fontOptions [data-font="agmg"] { font-family: 'Space Grotesk', sans-serif; }
 
 .cv-name { font-family: var(--cv-font-display); margin: 0; }
 .cv-role, .cv-contact, .cv-profile, .entry-title, .entry-sub, .entry-desc,
@@ -629,7 +666,7 @@ p { margin: 0; }
 }
 .template-executive .cv-head {
   display: flex; flex-direction: column; align-items: center; text-align: center;
-  padding-bottom: 16px; border-bottom: 1px solid #2A2A2A;
+  padding-bottom: 16px; border-bottom: 2px solid var(--accent);
 }
 .template-executive .cv-photo {
   width: 24mm; height: 24mm; margin-bottom: 12px;
@@ -639,7 +676,7 @@ p { margin: 0; }
   font-size: 26px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; color: #14141A;
 }
 .template-executive .cv-role {
-  font-size: 12.5px; color: #4A4A4A; margin-top: 4px; letter-spacing: 0.04em;
+  font-size: 12.5px; color: var(--accent); font-weight: 600; margin-top: 4px; letter-spacing: 0.04em;
 }
 .template-executive .cv-contact { justify-content: center; color: #4A4A4A; }
 .template-executive .cv-contact span:not(:last-child)::after { content: "|"; margin-left: 10px; color: #B9B9B9; }
@@ -648,13 +685,13 @@ p { margin: 0; }
 }
 .template-executive .cv-section { margin-bottom: calc(16px * var(--cv-gap-scale, 1)); }
 .template-executive .cv-section h3 {
-  color: #14141A; border-bottom: 1px solid #2A2A2A;
+  color: #14141A; border-bottom: 1px solid var(--accent);
 }
 .template-executive .cv-profile { text-align: left; }
 .template-executive .entry-title { color: #14141A; }
-.template-executive .skill-chip { background: none; border: 1px solid #2A2A2A; border-radius: 0; color: #2A2A2A; }
+.template-executive .skill-chip { background: none; border: 1px solid var(--accent); border-radius: 0; color: #2A2A2A; }
 .template-executive .entry-dates { font-style: italic; }
-.template-executive .cv-closing { column-span: all; margin-top: 20px; border-top-color: #2A2A2A; }
+.template-executive .cv-closing { column-span: all; margin-top: 20px; border-top-color: var(--accent); }
 
 /* --- Template Minimal : une seule colonne très aérée, photo discrète en ligne avec le nom --- */
 .template-minimal {
@@ -666,15 +703,16 @@ p { margin: 0; }
   width: 17mm; height: 17mm; border: none; filter: grayscale(35%);
 }
 .template-minimal .cv-name { font-size: 27px; font-weight: 500; color: #14141A; letter-spacing: -0.01em; }
-.template-minimal .cv-role { font-size: 12px; color: #6B6B6B; margin-top: 5px; font-weight: 400; }
+.template-minimal .cv-role { font-size: 12px; color: var(--accent); margin-top: 5px; font-weight: 500; }
 .template-minimal .cv-contact { color: #6B6B6B; }
 .template-minimal .cv-contact span:not(:last-child)::after { content: ""; margin-left: 4px; }
 .template-minimal .cv-contact span { margin-right: 12px; }
 .template-minimal .cv-head .cv-contact { margin-top: 6px; }
 .template-minimal .cv-body { margin-top: calc(32px * var(--cv-gap-scale, 1)); display: flex; flex-direction: column; gap: calc(26px * var(--cv-gap-scale, 1)); }
 .template-minimal .cv-section h3 {
-  font-weight: 500; letter-spacing: 0.16em; color: #9A9689; border-bottom: none; padding-bottom: 0;
+  font-weight: 500; letter-spacing: 0.16em; color: var(--accent); border-bottom: none; padding-bottom: 0;
 }
+.template-minimal .cv-section h3::before { content: ""; display: inline-block; width: 16px; height: 2px; background: var(--accent); margin-right: 8px; vertical-align: middle; }
 .template-minimal .entry { margin-bottom: calc(16px * var(--cv-gap-scale, 1)); }
 .template-minimal .entry-title { color: #14141A; font-weight: 500; }
 .template-minimal .entry-dates { color: #9A9689; }
@@ -713,7 +751,7 @@ p { margin: 0; }
   padding: 18mm 20mm;
   --cv-font-display: Arial, Helvetica, sans-serif; --cv-font-body: Arial, Helvetica, sans-serif; --cv-font-accent: Arial, Helvetica, sans-serif;
 }
-.template-ats .cv-head { position: relative; display: block; border-bottom: 1px solid #000; padding-bottom: 10px; padding-right: 24mm; }
+.template-ats .cv-head { position: relative; display: block; border-bottom: 2px solid var(--accent); padding-bottom: 10px; padding-right: 24mm; }
 .template-ats .cv-photo {
   position: absolute; top: 0; right: 0; width: 18mm; height: 18mm;
   border: 1px solid #000; border-radius: 0;
@@ -724,14 +762,14 @@ p { margin: 0; }
 .template-ats .cv-contact span:not(:last-child)::after { content: " | "; color: #000; margin-left: 0; }
 .template-ats .cv-body { margin-top: 16px; display: flex; flex-direction: column; gap: calc(14px * var(--cv-gap-scale, 1)); }
 .template-ats .cv-section h3 {
-  color: #000; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid #000;
+  color: #000; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--accent);
 }
 .template-ats .cv-profile, .template-ats .entry-desc, .template-ats .entry-sub, .template-ats .entry-title { color: #000; }
 .template-ats .entry-title { font-weight: 700; }
 .template-ats .entry-dates { color: #000; }
 .template-ats .skill-chip { background: none; border: none; padding: 0 10px 0 0; color: #000; border-radius: 0; }
 .template-ats .skills-grid { gap: 0; }
-.template-ats .cv-closing { border-top-color: #000; }
+.template-ats .cv-closing { border-top-color: var(--accent); }
 .template-ats .cv-closing-meta, .template-ats .cv-closing-signature-label { color: #000; }
 .template-ats .cv-closing-signature-line { border-top-color: #000; }
 
@@ -979,18 +1017,18 @@ p { margin: 0; }
   content: ""; position: absolute; left: -5%; right: -5%; bottom: -14px; height: 28px;
   background: var(--paper); transform: skewY(-2.4deg); transform-origin: left bottom;
 }
-.template-revolutionnaire .cv-photo { width: 26mm; height: 26mm; border-radius: 4px; border: 3px solid var(--accent); position: relative; z-index: 1; }
+.template-revolutionnaire .cv-photo { width: 26mm; height: 26mm; border-radius: 4px; border: 3px solid var(--accent-lite); position: relative; z-index: 1; }
 .template-revolutionnaire .cv-name {
   font-size: 34px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.01em;
   transform: skewX(-4deg); color: #fff; position: relative; z-index: 1;
 }
 .template-revolutionnaire .cv-role {
-  display: inline-block; margin-top: 8px; background: var(--accent); color: #14141A;
+  display: inline-block; margin-top: 8px; background: var(--accent-lite); color: var(--accent-lite-ink);
   font-weight: 800; padding: 4px 12px; transform: skewX(-8deg); font-size: 12px; text-transform: uppercase;
   position: relative; z-index: 1;
 }
 .template-revolutionnaire .cv-contact { color: rgba(255,255,255,0.7); margin-top: 10px; position: relative; z-index: 1; }
-.template-revolutionnaire .cv-contact span:not(:last-child)::after { content: "/"; margin-left: 10px; color: var(--accent); }
+.template-revolutionnaire .cv-contact span:not(:last-child)::after { content: "/"; margin-left: 10px; color: var(--accent-lite); }
 .template-revolutionnaire .cv-body { padding: 0 18mm; }
 .template-revolutionnaire .cv-section h3 {
   display: inline-block; background: #14141A; color: #fff; border-bottom: none;
@@ -1002,7 +1040,7 @@ p { margin: 0; }
   border-color: transparent transparent transparent #14141A;
 }
 .template-revolutionnaire .entry-title { color: #14141A; }
-.template-revolutionnaire .skill-chip { background: var(--accent); color: #14141A; font-weight: 700; border-radius: 2px; }
+.template-revolutionnaire .skill-chip { background: var(--accent); color: var(--accent-ink); font-weight: 700; border-radius: 2px; }
 .template-revolutionnaire .cv-closing { padding: 0 18mm; }
 
 /* --- Template Technologie (v3) : console futuriste en deux colonnes —
@@ -1019,7 +1057,7 @@ p { margin: 0; }
     linear-gradient(180deg, #0D1219, #080B10);
   -webkit-print-color-adjust: exact; print-color-adjust: exact;
 }
-.template-technologie::before { content: ""; position: absolute; top: -40mm; right: -40mm; width: 130mm; height: 130mm; background: radial-gradient(circle, var(--accent) 0%, transparent 65%); opacity: .16; pointer-events: none; }
+.template-technologie::before { content: ""; position: absolute; top: -40mm; right: -40mm; width: 130mm; height: 130mm; background: radial-gradient(circle, var(--accent-lite) 0%, transparent 65%); opacity: .16; pointer-events: none; }
 .template-technologie::after { content: ""; position: absolute; left: -30mm; bottom: -40mm; width: 110mm; height: 110mm; background: radial-gradient(circle, #3C7BFF 0%, transparent 65%); opacity: .10; pointer-events: none; }
 .template-technologie > * { position: relative; z-index: 1; }
 
@@ -1032,15 +1070,15 @@ p { margin: 0; }
 }
 .template-technologie .cv-head::before { content: ""; position: absolute; top: 11px; left: 14px; width: 8px; height: 8px; border-radius: 50%; background: #FF5F56; box-shadow: 14px 0 0 #FFBD2E, 28px 0 0 #27C93F; }
 .template-technologie .cv-head::after { content: "~/cv-pro/profil.sh"; position: absolute; top: 9px; left: 64px; font-family: var(--font-mono); font-size: 9px; letter-spacing: .06em; color: #6C7D90; }
-.template-technologie .cv-photo { width: 28mm; height: 28mm; border: 2px solid var(--accent); box-shadow: 0 0 0 4px rgba(255,255,255,.05), 0 0 20px rgba(120,170,220,.3); }
+.template-technologie .cv-photo { width: 28mm; height: 28mm; border: 2px solid var(--accent-lite); box-shadow: 0 0 0 4px rgba(255,255,255,.05), 0 0 20px rgba(120,170,220,.3); }
 .template-technologie .cv-name { font-family: var(--font-ui); font-weight: 800; color: #fff; font-size: 30px; line-height: 1.08; letter-spacing: -0.01em; text-shadow: 0 0 16px rgba(120,170,220,.4); }
 .template-technologie .cv-role {
   display: inline-flex; align-items: center; gap: 6px; margin-top: 9px;
-  font-family: var(--font-mono); font-size: 12px; color: var(--accent);
+  font-family: var(--font-mono); font-size: 12px; color: var(--accent-lite);
   background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 4px 10px;
 }
 .template-technologie .cv-role::before { content: "$"; opacity: .6; }
-.template-technologie .cv-role::after { content: ""; width: 6px; height: 12px; background: var(--accent); }
+.template-technologie .cv-role::after { content: ""; width: 6px; height: 12px; background: var(--accent-lite); }
 .template-technologie .cv-contact { font-family: var(--font-mono); gap: 5px 6px; margin-top: 11px; font-size: 0.66em; color: #9FB0C2; }
 .template-technologie .cv-contact span { padding: 2px 8px; border: 1px solid rgba(255,255,255,.12); border-radius: 4px; background: rgba(255,255,255,.04); }
 
@@ -1053,17 +1091,17 @@ p { margin: 0; }
   float: right; clear: right; width: 58mm; margin-right: 0;
   padding: 10px 12px 8px; border-radius: 10px;
   background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.1);
-  box-shadow: inset 3px 0 0 var(--accent);
+  box-shadow: inset 3px 0 0 var(--accent-lite);
 }
-.template-technologie .cv-section h3 { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-weight: 700; color: var(--accent); border-bottom: none; padding-bottom: 6px; letter-spacing: .14em; }
+.template-technologie .cv-section h3 { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-weight: 700; color: var(--accent-lite); border-bottom: none; padding-bottom: 6px; letter-spacing: .14em; }
 .template-technologie .cv-section h3::before { content: "//"; opacity: .55; }
-.template-technologie .cv-section h3::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent), transparent); opacity: .45; }
-.template-technologie .cv-profile { color: #C3D0DB; border-left: 2px solid var(--accent); padding-left: 12px; }
+.template-technologie .cv-section h3::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent-lite), transparent); opacity: .45; }
+.template-technologie .cv-profile { color: #C3D0DB; border-left: 2px solid var(--accent-lite); padding-left: 12px; }
 
 /* Frise lumineuse */
 .template-technologie .entry { position: relative; padding-left: 16px; }
-.template-technologie .entry::before { content: ""; position: absolute; left: 0; top: 5px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 9px var(--accent); }
-.template-technologie .entry::after { content: ""; position: absolute; left: 3.5px; top: 16px; bottom: -8px; width: 1px; background: var(--accent); opacity: .3; }
+.template-technologie .entry::before { content: ""; position: absolute; left: 0; top: 5px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-lite); box-shadow: 0 0 9px var(--accent-lite); }
+.template-technologie .entry::after { content: ""; position: absolute; left: 3.5px; top: 16px; bottom: -8px; width: 1px; background: var(--accent-lite); opacity: .3; }
 .template-technologie .entry:last-child::after { display: none; }
 .template-technologie .entry-top { flex-wrap: wrap; row-gap: 4px; }
 .template-technologie .entry-title { color: #fff; }
@@ -1073,14 +1111,14 @@ p { margin: 0; }
 /* Puces et langues */
 .template-technologie .skills-grid { gap: 5px; }
 .template-technologie .skill-chip { font-family: var(--font-mono); font-size: .74em; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14); color: #D6E2EA; border-radius: 6px; padding: 3px 9px; }
-.template-technologie .skill-chip::before { content: "#"; color: var(--accent); margin-right: 4px; }
+.template-technologie .skill-chip::before { content: "#"; color: var(--accent-lite); margin-right: 4px; }
 .template-technologie .lang-row { border-bottom: 1px dashed rgba(255,255,255,.12); padding-bottom: 4px; }
 .template-technologie .lang-row:last-child { border-bottom: none; }
-.template-technologie .lang-row .lang-level { font-family: var(--font-mono); font-size: .9em; color: var(--accent); }
+.template-technologie .lang-row .lang-level { font-family: var(--font-mono); font-size: .9em; color: var(--accent-lite); }
 .template-technologie .empty-hint { color: #6C7D90; }
 
 /* Pied de page */
-.template-technologie .cv-closing { clear: both; border-top: 1px solid transparent; border-image: linear-gradient(90deg, var(--accent), transparent) 1; }
+.template-technologie .cv-closing { clear: both; border-top: 1px solid transparent; border-image: linear-gradient(90deg, var(--accent-lite), transparent) 1; }
 .template-technologie .cv-closing-meta, .template-technologie .cv-closing-signature-label { color: #8696A8; }
 .template-technologie .cv-closing-signature-line { border-color: #3A4652; }
 
@@ -1088,7 +1126,7 @@ p { margin: 0; }
    dégradé, ombres douces, aspect ludique et coloré. --- */
 .template-innovant { background: #FBFAF7; }
 .template-innovant .cv-head {
-  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #fff));
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
   border-radius: 18px; padding: 18px 20px; color: #fff;
   display: flex; align-items: center; gap: 14px;
   box-shadow: 0 14px 30px -12px rgba(0,0,0,0.35);
@@ -1106,7 +1144,7 @@ p { margin: 0; }
 .template-innovant .cv-section h3 { color: var(--accent); border-bottom: none; }
 .template-innovant .entry-title { color: #14141A; }
 .template-innovant .skill-chip {
-  background: color-mix(in srgb, var(--accent) 14%, #fff); color: var(--accent); border-radius: 999px; font-weight: 600;
+  background: var(--accent-soft); color: var(--accent); border-radius: 999px; font-weight: 600;
 }
 .template-innovant .cv-closing { background: none; border-top: 2px dashed var(--line-paper); }
 
@@ -1181,6 +1219,35 @@ p { margin: 0; }
 .export-status { margin-top: 16px; font-size: 13px; color: var(--brass); min-height: 18px; }
 .export-status.is-error { color: var(--danger); }
 .export-status.is-success { color: var(--success); }
+
+/* ---- Barre de progression de téléchargement (couleur = accent du design) ---- */
+.has-progress { position: relative; }
+.has-progress.is-loading { padding-bottom: 56px; }
+.has-progress.is-loading:disabled { opacity: 1; }
+.export-progress { position: absolute; left: 16px; right: 16px; bottom: 14px; display: none; pointer-events: none; text-align: left; }
+.has-progress.is-loading .export-progress { display: block; }
+.export-progress-meta { display: flex; justify-content: flex-start; align-items: baseline; gap: 10px; margin-bottom: 6px; font-family: var(--font-mono, ui-monospace, monospace); font-size: 11px; letter-spacing: .03em; color: var(--muted); font-weight: 400; }
+.export-progress-meta b { font-weight: 600; }
+.ep-pct { color: var(--ink-text); font-variant-numeric: tabular-nums; }
+.export-progress-track { display: block; height: 9px; border-radius: 999px; overflow: hidden; background: rgba(255,255,255,.10); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
+.export-progress-fill { display: block; position: relative; overflow: hidden; height: 100%; width: 100%; background: var(--dl-color, var(--brass)); transform-origin: left center; transform: scaleX(0); transition: transform .35s cubic-bezier(.22,.8,.3,1); }
+.export-progress-fill::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,.38), transparent); transform: translateX(-100%); animation: epShine 1.3s linear infinite; }
+.has-progress.is-done .export-progress-fill::after, .has-progress.is-failed .export-progress-fill::after { animation: none; opacity: 0; }
+.has-progress.is-failed .export-progress-fill { background: var(--danger); }
+@keyframes epShine { to { transform: translateX(100%); } }
+@media (prefers-reduced-motion: reduce) { .export-progress-fill::after { animation: none; } .export-progress-fill { transition: none; } }
+
+/* ---- Champs de date : calendrier natif ---- */
+.field input[type="date"] { color-scheme: dark; min-height: 48px; cursor: pointer; }
+
+/* ---- Aperçus de modèles : vraies miniatures avec un CV fictif ---- */
+.tpl-live { position: relative; overflow: hidden; background: #fff; }
+.tpl-live .tpl-sheet { position: absolute; top: 0; left: 0; margin: 0; height: 297mm; min-height: 297mm; overflow: hidden; box-shadow: none; transform: scale(var(--k)); transform-origin: top left; pointer-events: none; }
+.template-thumb.tpl-live { width: 168px; height: 238px; --k: .2117; }
+.template-thumb.tpl-live::before, .template-thumb.tpl-live::after { display: none; }
+.template-card { flex-basis: 168px; }
+.template-note { margin: -8px 0 14px; font-size: 12px; color: var(--muted); }
+
 .qr-area {
   margin-top: 14px; padding: 18px; border-radius: var(--radius-m);
   border: 1px solid var(--line-navy); background: var(--app-bg-elevated);
@@ -1317,7 +1384,7 @@ p { margin: 0; }
 .template-kevin .cv-section { position: relative; z-index: 1; margin-right: 68mm; }
 .template-kevin .cv-section[data-section="skills"], .template-kevin .cv-section[data-section="languages"] { float: right; clear: right; width: 60mm; margin-right: 0; padding: 2mm 7mm 3mm 7mm; color: #fff; }
 .template-kevin .cv-section h3 { border-bottom: 2px solid #12161F; color: #12161F; font-weight: 800; }
-.template-kevin .cv-section[data-section="skills"] h3, .template-kevin .cv-section[data-section="languages"] h3 { color: var(--accent); border-bottom-color: var(--accent); }
+.template-kevin .cv-section[data-section="skills"] h3, .template-kevin .cv-section[data-section="languages"] h3 { color: var(--accent-lite); border-bottom-color: var(--accent-lite); }
 .template-kevin .skills-grid { display: block; }
 .template-kevin .skill-chip { display: block; color: #fff; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.25); border-radius: 3px; padding: 5px 8px; margin-bottom: 6px; }
 .template-kevin .lang-row, .template-kevin .lang-level { color: #E8EAF0; }
@@ -1456,6 +1523,7 @@ p { margin: 0; }
 
     <div class="home-templates" id="homeTemplates">
       <p class="section-label">Modèles disponibles</p>
+      <p class="template-note">Aperçus avec des données fictives — touchez un modèle pour l'essayer.</p>
       <div class="template-strip">
         <div class="template-card is-ready" data-template="modern">
           <div class="template-thumb thumb-modern"></div>
@@ -1635,14 +1703,21 @@ p { margin: 0; }
           <button class="option-chip" data-font="elegante">Élégante</button>
           <button class="option-chip" data-font="classique">Classique</button>
           <button class="option-chip" data-font="technique">Technique</button>
+          <button class="option-chip" data-font="yek">Yek</button>
+          <button class="option-chip" data-font="filous">Filous</button>
+          <button class="option-chip" data-font="agmg">Ag.Mg</button>
         </div>
       </div>
 
       <div class="design-block">
         <p class="design-block-title">Photo</p>
         <div class="option-row" id="photoOptions">
-          <button class="option-chip is-active" data-photo="ronde">Ronde</button>
+          <button class="option-chip is-active" data-photo="auto">Auto</button>
+          <button class="option-chip" data-photo="ronde">Ronde</button>
           <button class="option-chip" data-photo="carree">Carrée</button>
+          <button class="option-chip" data-photo="arrondie">Arrondie</button>
+          <button class="option-chip" data-photo="portrait">Portrait</button>
+          <button class="option-chip" data-photo="cadre">Cadre</button>
           <button class="option-chip" data-photo="aucune">Sans photo</button>
         </div>
       </div>
@@ -1744,7 +1819,6 @@ let uidCounter = 1;
 const uid = () => "id" + (uidCounter++);
 
 const OPTIONAL_SECTIONS = [
-  { key: "certifications", label: "Certifications", ph: "Certification professionnelle" },
   { key: "recompenses", label: "Récompenses", ph: "Employé(e) du mois — Mai 2024" },
   { key: "benevolat", label: "Bénévolat", ph: "Bénévole — Croix-Rouge" },
   { key: "interets", label: "Centres d'intérêt", ph: "Lecture, sport, photographie" },
@@ -1774,7 +1848,7 @@ const defaultState = () => ({
   projects: [],
   optional: { enabled: [], sections: Object.fromEntries(OPTIONAL_SECTIONS.map(s => [s.key, []])) },
   closing: { lieu: "", date: new Date().toISOString().slice(0, 10) },
-  settings: { template: "modern", color: "#C6A15B", font: "moderne", photoShape: "ronde" }
+  settings: { template: "modern", color: "#C6A15B", font: "moderne", photoShape: "auto", photoV: 2 }
 });
 
 let state = defaultState();
@@ -1808,7 +1882,26 @@ const STEP_TITLES = {
   closing: "Lieu, date et signature"
 };
 
-const COLORS = ["#C6A15B", "#3B5D8A", "#4E9668", "#8B5A9E", "#B23A2E", "#2B2B2B"];
+const COLORS = ["#C6A15B", "#3B5D8A", "#4E9668", "#8B5A9E", "#B23A2E", "#2B2B2B", "#0E8F8A", "#E0792A", "#D6457A"];
+const FONT_KEYS = ["moderne", "elegante", "classique", "technique", "yek", "filous", "agmg"];
+const PHOTO_KEYS = ["auto", "ronde", "carree", "arrondie", "portrait", "cadre", "aucune"];
+
+/* Variantes de la couleur d'accent, calculées ici (et non en CSS color-mix, que
+   l'export PDF/PNG ne sait pas lire) : version éclaircie pour les fonds sombres,
+   couleur de texte lisible sur l'accent, teinte douce. */
+function accentVars(hex) {
+  const rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const lin = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+  const lum = h => { const [r, g, b] = rgb(h); return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b); };
+  const mix = (h, t) => "#" + rgb(h).map(v => Math.round(v + (255 - v) * t).toString(16).padStart(2, "0")).join("");
+  const ink = h => lum(h) > 0.3 ? "#14141A" : "#FFFFFF";
+  const L = lum(hex);
+  const lite = mix(hex, Math.min(0.6, Math.max(0.08, (0.4 - L) * 1.6)));
+  return {
+    "--accent": hex, "--accent-lite": lite, "--accent-ink": ink(hex), "--accent-lite-ink": ink(lite),
+    "--accent-2": mix(hex, 0.4), "--accent-soft": mix(hex, 0.86)
+  };
+}
 
 /* =====================================================================
    PERSISTANCE
@@ -1820,6 +1913,10 @@ function cleanState() {
   const T = Array.from(document.querySelectorAll(".option-chip[data-template]")).map(b => b.dataset.template);
   if (T.length && !T.includes(state.settings.template)) state.settings.template = "modern";
   if (!/^#[0-9a-fA-F]{6}$/.test(state.settings.color || "")) state.settings.color = "#C6A15B";
+  if (!FONT_KEYS.includes(state.settings.font)) state.settings.font = "moderne";
+  // anciennes sauvegardes : « Ronde » était le réglage par défaut (le style du modèle s'appliquait) -> « Auto »
+  if (!state.settings.photoV) { if (state.settings.photoShape === "ronde") state.settings.photoShape = "auto"; state.settings.photoV = 2; }
+  if (!PHOTO_KEYS.includes(state.settings.photoShape)) state.settings.photoShape = "auto";
   const map = { Notions: "A2", "Intermédiaire": "B1", Courant: "C1" };
   ["experiences","education","skills","languages","projects"].forEach(k => { if (!Array.isArray(state[k])) state[k] = []; });
   state.languages.forEach(l => { if (map[l.niveau]) l.niveau = map[l.niveau]; });
@@ -1827,6 +1924,20 @@ function cleanState() {
   let max = 0;
   JSON.stringify(state, (k, v) => { if (k === "id" && typeof v === "string") { const m = v.match(/^id(\d+)$/); if (m) max = Math.max(max, +m[1]); } return v; });
   uidCounter = Math.max(uidCounter, max + 1);
+  // « Certifications » n'est plus une section à part (c'est une formation) :
+  // les anciennes entrées sont déplacées dans Formation pour ne rien perdre.
+  const opt = state.optional && typeof state.optional === "object" ? state.optional : (state.optional = {});
+  if (!opt.sections || typeof opt.sections !== "object") opt.sections = {};
+  if (!Array.isArray(opt.enabled)) opt.enabled = [];
+  const legacyCerts = opt.sections.certifications;
+  if (Array.isArray(legacyCerts)) {
+    legacyCerts.forEach(it => {
+      if (it && it.nom) state.education.push({ id: uid(), diplome: it.nom, etablissement: "", lieu: "", dateDebut: "", dateFin: "", enCours: false, description: "" });
+    });
+  }
+  delete opt.sections.certifications;
+  opt.enabled = opt.enabled.filter(k => OPTIONAL_SECTIONS.some(sec => sec.key === k));
+  OPTIONAL_SECTIONS.forEach(sec => { if (!Array.isArray(opt.sections[sec.key])) opt.sections[sec.key] = []; });
 }
 
 function scheduleSave() {
@@ -1903,6 +2014,36 @@ function field({ id, label, type = "text", value = "", placeholder = "", help = 
       <label for="${id}">${label}</label>
       <${tag} id="${id}" ${attrs} placeholder="${escapeAttr(placeholder)}">${type === "textarea" ? escapeHtml(value) : ""}</${tag}>
       ${help ? `<span class="field-help">${help}</span>` : ""}
+    </div>`;
+}
+
+
+/* ---- Dates : calendrier natif (plus de confusion jour/mois) ---- */
+function parseFrDate(str) {
+  const t = String(str || "").trim();
+  let m, d = 1, mo = 1, y, exact = false;
+  if ((m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/))) { d = +m[1]; mo = +m[2]; y = +m[3]; exact = true; }
+  else if ((m = t.match(/^(\d{1,2})\/(\d{4})$/))) { mo = +m[1]; y = +m[2]; }
+  else if ((m = t.match(/^(\d{4})$/))) { y = +m[1]; }
+  else return null;
+  const dt = new Date(y, mo - 1, d);
+  if (dt.getFullYear() !== y || dt.getMonth() !== mo - 1 || dt.getDate() !== d) return null;
+  const pad = n => String(n).padStart(2, "0");
+  return { iso: `${y}-${pad(mo)}-${pad(d)}`, exact };
+}
+function isoToFr(iso) {
+  const m = String(iso || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : "";
+}
+function dateField({ id, label, value = "", disabled = false }) {
+  const parsed = parseFrDate(value);
+  const help = value && !(parsed && parsed.exact)
+    ? `<span class="field-help">Valeur actuelle : « ${escapeHtml(value)} » — choisissez une date pour la remplacer.</span>` : "";
+  return `
+    <div class="field">
+      <label for="${id}">${label}</label>
+      <input id="${id}" type="date" min="1950-01-01" max="2100-12-31" value="${parsed ? parsed.iso : ""}" ${disabled ? "disabled" : ""}>
+      ${help}
     </div>`;
 }
 
@@ -2109,8 +2250,8 @@ function renderEntryList(stateKey, list, textFields, hasDates, descPlaceholder, 
           ${textFields.map(tf => field({ id: `e_${item.id}_${tf.key}`, label: tf.label, value: item[tf.key], placeholder: tf.ph })).join("")}
           ${hasDates ? `
             <div class="field-row">
-              ${field({ id: `e_${item.id}_dateDebut`, label: "Date de début", value: item.dateDebut, placeholder: "01/2022" })}
-              ${field({ id: `e_${item.id}_dateFin`, label: "Date de fin", value: item.dateFin, placeholder: "Aujourd'hui" })}
+              ${dateField({ id: `e_${item.id}_dateDebut`, label: "Date de début", value: item.dateDebut })}
+              ${dateField({ id: `e_${item.id}_dateFin`, label: "Date de fin", value: item.dateFin, disabled: item.enCours })}
             </div>
             <div class="field-check">
               <input type="checkbox" id="e_${item.id}_encours" ${item.enCours ? "checked" : ""}>
@@ -2283,10 +2424,18 @@ function bindEntryList(stepId) {
     Object.keys(item).forEach(key => {
       if (key === "id" || key === "enCours") return;
       const el = document.getElementById(`e_${item.id}_${key}`);
-      el?.addEventListener("input", () => { item[key] = el.value; renderPreview(); scheduleSave(); });
+      if (!el) return;
+      const isDate = el.type === "date";
+      el.addEventListener("input", () => { item[key] = isDate ? isoToFr(el.value) : el.value; renderPreview(); scheduleSave(); });
+      if (isDate) el.addEventListener("click", () => { try { el.showPicker && el.showPicker(); } catch (e) { /* le navigateur gère */ } });
     });
     const chk = document.getElementById(`e_${item.id}_encours`);
-    chk?.addEventListener("change", () => { item.enCours = chk.checked; renderPreview(); scheduleSave(); });
+    chk?.addEventListener("change", () => {
+      item.enCours = chk.checked;
+      const fin = document.getElementById(`e_${item.id}_dateFin`);
+      if (fin) fin.disabled = chk.checked;
+      renderPreview(); scheduleSave();
+    });
   });
 }
 
@@ -2418,14 +2567,23 @@ function renderAtsAnalysis() {
    ===================================================================== */
 function renderPreview() {
   const sheet = document.getElementById("cvSheet");
-  sheet.className = `cv-sheet template-${state.settings.template}`;
-  sheet.dataset.font = state.settings.font;
-  const p = state.personal;
+  fillSheet(sheet, state);
+  document.documentElement.style.setProperty("--accent", state.settings.color);
+  updateSpacingScale(sheet);
+  renderAtsAnalysis();
+}
+
+/* Construit une feuille de CV à partir de n'importe quelles données (le CV de
+   l'utilisateur, ou le CV fictif des aperçus de modèles). */
+function fillSheet(sheet, st) {
+  sheet.className = `cv-sheet template-${st.settings.template}`;
+  sheet.dataset.font = st.settings.font;
+  const p = st.personal;
   const fullName = `${p.prenom} ${p.nom}`.trim() || "Votre nom";
 
-  const atsMode = state.settings.template === "ats";
-  const photoBlock = (!atsMode && state.settings.photoShape !== "aucune")
-    ? `<img class="cv-photo shape-${state.settings.photoShape}" src="${p.photo || placeholderAvatar()}" alt="">`
+  const atsMode = st.settings.template === "ats";
+  const photoBlock = (!atsMode && st.settings.photoShape !== "aucune")
+    ? `<img class="cv-photo shape-${st.settings.photoShape}" src="${p.photo || placeholderAvatar()}" alt="">`
     : "";
 
   const contactBits = [
@@ -2436,23 +2594,23 @@ function renderPreview() {
     p.linkedin && `<span>${escapeHtml(p.linkedin)}</span>`
   ].filter(Boolean).join("");
 
-  const experienceHtml = renderEntriesForSheet(state.experiences, e => ({
+  const experienceHtml = renderEntriesForSheet(st.experiences, e => ({
     title: e.poste || "Poste", sub: e.entreprise || "", right: dateRange(e)
   }));
-  const educationHtml = renderEntriesForSheet(state.education, e => ({
+  const educationHtml = renderEntriesForSheet(st.education, e => ({
     title: e.diplome || "Diplôme", sub: e.etablissement || "", right: dateRange(e)
   }));
 
-  const skillsHtml = state.skills.length
-    ? `<div class="skills-grid">${state.skills.map(s => `<span class="skill-chip">${escapeHtml(s.nom)}</span>`).join("")}</div>`
+  const skillsHtml = st.skills.length
+    ? `<div class="skills-grid">${st.skills.map(s => `<span class="skill-chip">${escapeHtml(s.nom)}</span>`).join("")}</div>`
     : `<p class="empty-hint">Ajoutez vos compétences pour qu'elles apparaissent ici.</p>`;
 
-  const langHtml = state.languages.length
-    ? state.languages.map(l => `<div class="lang-row"><span>${escapeHtml(l.nom) || "Langue"}</span><span class="lang-level">${escapeHtml(l.niveau)}</span></div>`).join("")
+  const langHtml = st.languages.length
+    ? st.languages.map(l => `<div class="lang-row"><span>${escapeHtml(l.nom) || "Langue"}</span><span class="lang-level">${escapeHtml(l.niveau)}</span></div>`).join("")
     : "";
 
-  const projectsHtml = state.projects.length
-    ? state.projects.map(pr => `
+  const projectsHtml = st.projects.length
+    ? st.projects.map(pr => `
         <div class="entry">
           <div class="entry-top"><span class="entry-title">${escapeHtml(pr.nom) || "Projet"}</span></div>
           ${pr.role ? `<div class="entry-sub">${escapeHtml(pr.role)}</div>` : ""}
@@ -2461,8 +2619,8 @@ function renderPreview() {
         </div>`).join("")
     : "";
 
-  const optionalHtml = state.optional.enabled.map(key => {
-    const items = state.optional.sections[key].filter(it => it.nom);
+  const optionalHtml = st.optional.enabled.map(key => {
+    const items = st.optional.sections[key].filter(it => it.nom);
     if (!items.length) return "";
     const conf = OPTIONAL_SECTIONS.find(s => s.key === key);
     return section(conf.label, `<div class="skills-grid">${items.map(it => `<span class="skill-chip">${escapeHtml(it.nom)}</span>`).join("")}</div>`, `optional-${key}`);
@@ -2478,17 +2636,17 @@ function renderPreview() {
       </div>
     </header>
     <div class="cv-body">
-      ${state.profile ? section("Profil", `<p class="cv-profile">${escapeHtml(state.profile)}</p>`, "profile") : ""}
-      ${state.experiences.length ? section("Expérience", experienceHtml, "experience") : ""}
-      ${state.education.length ? section("Formation", educationHtml, "education") : ""}
-      ${state.skills.length ? section("Compétences", skillsHtml, "skills") : ""}
-      ${state.projects.length ? section("Projets", projectsHtml, "projects") : ""}
-      ${state.languages.length ? section("Langues", langHtml, "languages") : ""}
+      ${st.profile ? section("Profil", `<p class="cv-profile">${escapeHtml(st.profile)}</p>`, "profile") : ""}
+      ${st.experiences.length ? section("Expérience", experienceHtml, "experience") : ""}
+      ${st.education.length ? section("Formation", educationHtml, "education") : ""}
+      ${st.skills.length ? section("Compétences", skillsHtml, "skills") : ""}
+      ${st.projects.length ? section("Projets", projectsHtml, "projects") : ""}
+      ${st.languages.length ? section("Langues", langHtml, "languages") : ""}
       ${optionalHtml}
-      ${!state.profile && !state.experiences.length && !state.education.length && !state.skills.length
+      ${!st.profile && !st.experiences.length && !st.education.length && !st.skills.length
         ? `<p class="empty-hint">Remplissez l'éditeur pour voir votre CV prendre forme ici.</p>` : ""}
       <div class="cv-closing">
-        <div class="cv-closing-meta">${buildFaitLe(state.closing) ? escapeHtml(buildFaitLe(state.closing)) : `<span class="empty-hint">Renseignez le lieu et la date à la dernière étape.</span>`}</div>
+        <div class="cv-closing-meta">${buildFaitLe(st.closing) ? escapeHtml(buildFaitLe(st.closing)) : `<span class="empty-hint">Renseignez le lieu et la date à la dernière étape.</span>`}</div>
         <div class="cv-closing-signature">
           <div class="cv-closing-signature-line"></div>
           <span class="cv-closing-signature-label">Signature</span>
@@ -2496,7 +2654,7 @@ function renderPreview() {
       </div>
     </div>
   `;
-  if (state.settings.template === "technologie") {
+  if (st.settings.template === "technologie") {
     // colonne latérale flottante : compétences, langues et rubriques en plus montent en tête du corps
     const tb = sheet.querySelector(".cv-body");
     if (tb) {
@@ -2504,15 +2662,12 @@ function renderPreview() {
       side.reverse().forEach(el => tb.insertBefore(el, tb.firstChild));
     }
   }
-  if (state.settings.template === "kevin") {
+  if (st.settings.template === "kevin") {
     // colonne latérale : compétences et langues montent en tête pour s'aligner en haut de la colonne sombre
     const kb = sheet.querySelector(".cv-body");
     ["languages", "skills"].forEach(k => { const el = kb && kb.querySelector(`[data-section="${k}"]`); if (el) kb.insertBefore(el, kb.firstChild); });
   }
-  sheet.style.setProperty("--accent", state.settings.color);
-  document.documentElement.style.setProperty("--accent", state.settings.color);
-  updateSpacingScale(sheet);
-  renderAtsAnalysis();
+  Object.entries(accentVars(st.settings.color)).forEach(([k, v]) => sheet.style.setProperty(k, v));
 }
 
 /* Espacement intelligent : ne touche JAMAIS à la taille du texte (qui reste
@@ -2603,6 +2758,73 @@ function escapeHtml(str) {
 }
 function escapeAttr(str) { return escapeHtml(str); }
 
+
+/* =====================================================================
+   APERÇUS DES MODÈLES — vraies miniatures rendues avec un CV fictif
+   ===================================================================== */
+const DEMO_COLOR = "#C6A15B";
+function demoState(template, color) {
+  const sections = Object.fromEntries(OPTIONAL_SECTIONS.map(sec => [sec.key, []]));
+  sections.interets = [{ id: "d90", nom: "Photographie" }, { id: "d91", nom: "Lecture" }, { id: "d92", nom: "Voyage" }];
+  return {
+    personal: {
+      photo: "", prenom: "Amélie", nom: "Mukendi", titre: "Responsable marketing digital",
+      adresse: "", codePostal: "", ville: "Kinshasa", pays: "RDC",
+      email: "amelie.mukendi@exemple.com", tel: "+243 81 000 00 00", siteweb: "", linkedin: ""
+    },
+    profile: "Spécialiste du marketing digital avec 6 ans d'expérience : stratégie de contenu, campagnes payantes et analyse de performance. Rigoureuse, créative et orientée résultats.",
+    experiences: [
+      { id: "d1", poste: "Responsable marketing", entreprise: "Kivu Distribution", lieu: "Kinshasa", dateDebut: "03/2021", dateFin: "", enCours: true, description: "Pilotage d'une équipe de 4 personnes. +45 % de trafic en 12 mois grâce à une nouvelle stratégie de contenu." },
+      { id: "d2", poste: "Chargée de communication", entreprise: "Agence Horizon", lieu: "Kinshasa", dateDebut: "2018", dateFin: "2021", enCours: false, description: "Gestion des réseaux sociaux et organisation de 12 événements clients." },
+      { id: "d6", poste: "Assistante marketing", entreprise: "Studio Lumière", lieu: "Lubumbashi", dateDebut: "2016", dateFin: "2018", enCours: false, description: "Veille concurrentielle, reporting mensuel et création de supports visuels." }
+    ],
+    education: [
+      { id: "d3", diplome: "Master en marketing", etablissement: "Université de Kinshasa", lieu: "", dateDebut: "2015", dateFin: "2018", enCours: false, description: "" },
+      { id: "d7", diplome: "Licence en communication", etablissement: "Université de Lubumbashi", lieu: "", dateDebut: "2012", dateFin: "2015", enCours: false, description: "" }
+    ],
+    skills: ["SEO / SEA", "Analyse de données", "Gestion de projet", "Rédaction web", "Excel", "Canva", "Google Analytics"].map((nom, i) => ({ id: "d4" + i, nom })),
+    languages: [{ id: "d50", nom: "Français", niveau: "Langue maternelle" }, { id: "d51", nom: "Anglais", niveau: "B2" }],
+    projects: [{ id: "d8", nom: "Refonte du site e-commerce", role: "Cheffe de projet", technologies: "SEO, UX, Analytics", lien: "", description: "Nouveau parcours d'achat : +28 % de conversions en 6 mois." }],
+    optional: { enabled: ["interets"], sections },
+    closing: { lieu: "Kinshasa", date: "2026-01-15" },
+    settings: { template, color, font: "moderne", photoShape: "auto", photoV: 2 }
+  };
+}
+
+function buildTemplateSheet(template) {
+  let stage = document.getElementById("tplStage");
+  if (!stage) {
+    stage = document.createElement("div");
+    stage.id = "tplStage";
+    stage.setAttribute("aria-hidden", "true");
+    stage.style.cssText = "position:fixed;left:-10000px;top:0;visibility:hidden;pointer-events:none;";
+    document.body.appendChild(stage);
+  }
+  const sheet = document.createElement("article");
+  fillSheet(sheet, demoState(template, DEMO_COLOR));
+  sheet.classList.add("tpl-sheet");
+  stage.appendChild(sheet);
+  try { updateSpacingScale(sheet); } finally { stage.removeChild(sheet); }
+  return sheet;
+}
+
+function setupTemplatePreviews() {
+  // aperçus réalistes uniquement sur l'accueil ; l'onglet Design garde ses simples noms
+  const keys = Array.from(document.querySelectorAll("#templateOptions .option-chip[data-template]")).map(b => b.dataset.template);
+  let i = 0;
+  const step = () => {
+    const t0 = performance.now();
+    while (i < keys.length && performance.now() - t0 < 24) {
+      const key = keys[i++];
+      const sheet = buildTemplateSheet(key);
+      const card = document.querySelector(`.template-card[data-template="${key}"] .template-thumb`);
+      if (card) { card.className = "template-thumb tpl-live"; card.replaceChildren(sheet); }
+    }
+    if (i < keys.length) setTimeout(step, 16);
+  };
+  step();
+}
+
 /* =====================================================================
    DESIGN — couleurs / typo / photo
    ===================================================================== */
@@ -2652,13 +2874,76 @@ function outputFileName(ext) {
   return `${name}.${ext}`;
 }
 
+/* Barre de progression sur le bouton qui lance le téléchargement.
+   Les jalons (polices prêtes, feuille capturée, page ajoutée au PDF, fichier
+   enregistré) sont réels : la barre ne saute jamais en avant d'une étape non
+   terminée. Pendant la longue étape de rendu (html2canvas, sans compteur
+   interne), elle avance progressivement vers le jalon suivant sans jamais
+   l'atteindre, et ne passe à 100 % que lorsque le fichier est réellement
+   enregistré. La couleur de remplissage est la couleur d'accent du design. */
+function createDownloadProgress(btn) {
+  btn.classList.add("has-progress");
+  let ui = btn.querySelector(".export-progress");
+  if (!ui) {
+    ui = document.createElement("span");
+    ui.className = "export-progress";
+    ui.innerHTML = '<span class="export-progress-meta"><b class="ep-pct">0 %</b><b class="ep-label"></b></span>' +
+      '<span class="export-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i class="export-progress-fill"></i></span>';
+    btn.appendChild(ui);
+  }
+  const fill = ui.querySelector(".export-progress-fill");
+  const label = ui.querySelector(".ep-label");
+  const pct = ui.querySelector(".ep-pct");
+  const track = ui.querySelector(".export-progress-track");
+  let value = 0, ceiling = 0, timer = null, hideTimer = null;
+
+  const paint = () => {
+    const v = Math.max(0, Math.min(100, value));
+    fill.style.transform = `scaleX(${(v / 100).toFixed(4)})`;
+    pct.textContent = Math.floor(v) + " %";
+    track.setAttribute("aria-valuenow", String(Math.floor(v)));
+  };
+  const stop = () => { if (timer) clearInterval(timer); timer = null; };
+  const api = {
+    start() {
+      clearTimeout(hideTimer); stop();
+      value = 0; ceiling = 0;
+      btn.style.setProperty("--dl-color", state.settings.color);
+      btn.classList.remove("is-done", "is-failed");
+      btn.classList.add("is-loading");
+      label.textContent = "Démarrage…";
+      paint();
+      // la barre s'affiche sous le bouton : on le ramène au centre pour qu'elle ne soit pas masquée par la barre d'onglets
+      try { btn.scrollIntoView({ block: "center", behavior: "smooth" }); } catch (e) { /* sans importance */ }
+    },
+    at(v, text) { stop(); value = Math.max(value, v); if (text) label.textContent = text; paint(); },
+    go(text, from, to) {
+      stop(); value = Math.max(value, from); ceiling = to; label.textContent = text; paint();
+      timer = setInterval(() => { value += (ceiling - value) * 0.07; paint(); }, 150);
+    },
+    done(text) {
+      stop(); value = 100; label.textContent = text || "Terminé"; btn.classList.add("is-done"); paint();
+      hideTimer = setTimeout(api.hide, 3200);
+    },
+    fail(text) {
+      stop(); label.textContent = text || "Échec"; btn.classList.add("is-failed");
+      hideTimer = setTimeout(api.hide, 3200);
+    },
+    hide() { stop(); btn.classList.remove("is-loading", "is-done", "is-failed"); }
+  };
+  return api;
+}
+const tick = (ms = 30) => new Promise(r => setTimeout(r, ms));
+
 /* Capture la feuille en haute définition. Attend d'abord le chargement complet
    des polices (Fraunces / Inter) : sans ça, un export lancé juste après l'ouverture
    de l'app pouvait figer une police de secours à la place de la bonne typo. */
-async function captureSheetCanvas() {
+async function captureSheetCanvas(progress) {
+  progress && progress.go("Préparation…", 3, 14);
   if (document.fonts && document.fonts.ready) {
     try { await document.fonts.ready; } catch (e) { /* tant pis, on continue */ }
   }
+  progress && progress.at(15, "Mise en page…");
   const sheet = document.getElementById("cvSheet");
   const clone = sheet.cloneNode(true);
   clone.style.transform = "none";
@@ -2670,6 +2955,7 @@ async function captureSheetCanvas() {
   try {
     // scale élevé pour un rendu net à l'impression (HD), plafonné pour rester performant
     const scale = Math.min(4, Math.max(2, window.devicePixelRatio * 2 || 3));
+    progress && progress.go("Rendu haute définition…", 20, 68);
     return await html2canvas(clone, { scale, useCORS: true, backgroundColor: "#ffffff" });
   } finally {
     document.body.removeChild(clone);
@@ -2706,32 +2992,36 @@ async function saveFileToDevice(blob, filename, mime) {
 }
 
 async function exportPdf() {
+  const prog = createDownloadProgress(document.getElementById("exportPdfBtn"));
   setExportButtonsBusy(true);
-  setExportStatus("⏳ Génération du PDF en haute définition...");
+  setExportStatus("");
+  prog.start();
   try {
-    const canvas = await captureSheetCanvas();
+    const canvas = await captureSheetCanvas(prog);
+    prog.at(70, "Création du PDF…"); await tick();
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ unit: "mm", format: "a4", compress: true });
     const imgData = canvas.toDataURL("image/png");
+    prog.at(78); await tick();
     const pageHeight = 297;
     const imgHeight = (canvas.height * 210) / canvas.width;
     // Tolérance pour ignorer un léger dépassement dû aux arrondis
     // (px -> mm) : sans elle, un CV qui tient exactement sur une page
     // pouvait déclencher une seconde page quasiment vide.
     const EPS = 1.5;
-    let heightLeft = imgHeight, position = 0;
-
-    pdf.addImage(imgData, "PNG", 0, position, 210, imgHeight, undefined, "FAST");
-    heightLeft -= pageHeight;
-    while (heightLeft > EPS) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, "PNG", 0, position, 210, imgHeight, undefined, "FAST");
-      heightLeft -= pageHeight;
+    let pages = 1, left = imgHeight - pageHeight;
+    while (left > EPS) { pages++; left -= pageHeight; }
+    for (let i = 0; i < pages; i++) {
+      if (i > 0) pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, -i * pageHeight, 210, imgHeight, undefined, "FAST");
+      prog.at(78 + (14 * (i + 1)) / pages, pages > 1 ? `Création du PDF… page ${i + 1}/${pages}` : "Création du PDF…");
+      await tick(10);
     }
 
     const blob = pdf.output("blob");
+    prog.go("Enregistrement…", 93, 99);
     const result = await saveFileToDevice(blob, outputFileName("pdf"), "application/pdf");
+    if (result === "cancelled") prog.hide(); else prog.done(result === "shared" ? "Prêt à enregistrer" : "Téléchargé");
     setExportStatus(
       result === "cancelled" ? "Export annulé." :
       result === "shared" ? "✅ PDF prêt — choisissez où l'enregistrer." :
@@ -2739,6 +3029,7 @@ async function exportPdf() {
       result === "cancelled" ? undefined : "success"
     );
   } catch (e) {
+    prog.fail("Échec");
     setExportStatus("❌ Impossible de générer le PDF. Réessayez.", "error");
   } finally {
     setExportButtonsBusy(false);
@@ -2746,13 +3037,18 @@ async function exportPdf() {
 }
 
 async function exportPng() {
+  const prog = createDownloadProgress(document.getElementById("exportPngBtn"));
   setExportButtonsBusy(true);
-  setExportStatus("⏳ Génération de l'image en haute définition...");
+  setExportStatus("");
+  prog.start();
   try {
-    const canvas = await captureSheetCanvas();
+    const canvas = await captureSheetCanvas(prog);
+    prog.go("Création de l'image…", 72, 90);
     const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/png", 1));
     if (!blob) throw new Error("toBlob a échoué");
+    prog.go("Enregistrement…", 92, 99);
     const result = await saveFileToDevice(blob, outputFileName("png"), "image/png");
+    if (result === "cancelled") prog.hide(); else prog.done(result === "shared" ? "Prête à enregistrer" : "Téléchargée");
     setExportStatus(
       result === "cancelled" ? "Export annulé." :
       result === "shared" ? "✅ Image prête — choisissez où l'enregistrer." :
@@ -2760,6 +3056,7 @@ async function exportPng() {
       result === "cancelled" ? undefined : "success"
     );
   } catch (e) {
+    prog.fail("Échec");
     setExportStatus("❌ Impossible de générer l'image. Réessayez.", "error");
   } finally {
     setExportButtonsBusy(false);
@@ -2951,9 +3248,22 @@ function generateQrCode() {
 async function downloadQrCode() {
   const canvas = document.querySelector("#qrCodeCanvasHolder canvas");
   if (!canvas) return;
-  const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/png", 1));
-  if (!blob) return;
-  await saveFileToDevice(blob, outputFileName("qr.png"), "image/png");
+  const btn = document.getElementById("qrDownloadBtn");
+  const prog = createDownloadProgress(btn);
+  btn.disabled = true;
+  prog.start();
+  try {
+    prog.at(20, "Préparation…"); await tick();
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/png", 1));
+    if (!blob) throw new Error("toBlob a échoué");
+    prog.go("Enregistrement…", 55, 99);
+    const result = await saveFileToDevice(blob, outputFileName("qr.png"), "image/png");
+    if (result === "cancelled") prog.hide(); else prog.done("Téléchargé");
+  } catch (e) {
+    prog.fail("Échec");
+  } finally {
+    btn.disabled = false;
+  }
 }
 
 /* =====================================================================
@@ -3280,6 +3590,8 @@ function setupPWA() {
 document.addEventListener("DOMContentLoaded", () => {
   setupFeedback();
   setupPWA();
+  // aperçus de modèles : après le chargement des polices, pour des mesures justes
+  Promise.race([(document.fonts && document.fonts.ready) || Promise.resolve(), tick(2500)]).then(setupTemplatePreviews);
 });
 document.addEventListener("DOMContentLoaded", init);
 })();
