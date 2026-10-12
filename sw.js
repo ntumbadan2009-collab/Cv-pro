@@ -4,7 +4,7 @@
    - Il met en cache la page ET les bibliothèques externes dont elle dépend
      (html2canvas, jsPDF, QRCode, polices) pour que l'app, l'export PDF/PNG et
      le QR code fonctionnent aussi hors-ligne après une première visite. */
-const CACHE_NAME = "cv-pro-cache-v5";
+const CACHE_NAME = "cv-pro-cache-v6";
 const APP_SHELL = ["./", "./index.html"];
 const EXTERNAL = [
   "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
